@@ -1,0 +1,46 @@
+{
+  "movies":[
+    {
+      
+        "id": "1",
+        "title": "The Giant Gila Monster",
+        "runtime": "108",
+        "capacity": 30,
+        "showtime": "04:00PM",
+        "tickets_sold": 27,
+        "description": "A giant lizard terrorizes a rural Texas community and a heroic teenager attempts to destroy the creature.",
+        "poster": "://www.gstatic.com/tv/thumb/v22vhttpsodart/2157/p2157_v_v8_ab.jpg"
+       
+    },
+    {
+      "id": "2",  
+      "title": "Manos: The Hands Of Fate",
+      "runtime": "118",
+      "capacity": 50,
+      "showtime": "06:45PM",
+      "tickets_sold": 44,
+      "description": "A family gets lost on the road and stumbles upon a hidden, underground, devil-worshiping cult led by the fearsome Master and his servant Torgo.",
+      "poster": "://www.gstatic.com/tv/thumb/v22vhttpsodart/2157/p2157_v_v7_ab.jpg"
+  
+    },
+    {
+
+    "id": "3",  
+    "title": "waiting to see",
+    "runtime": "120",
+    "capacity": 33,
+    "showtime": "03:45PM",
+    "tickets_sold": 42,
+    "description": "A family gets lost on the road and stumbles upon a hidden, underground, devil-worshiping cult led by the fearsome Master and his servant Torgo.",
+    "poster": "://www.gstatic.com/tv/thumb/v22vhttpsodart/2157/p2157_v_v6_ab.jpg"
+    }
+  ],
+  "interesting":[
+    {
+      "id":"2",
+      "movie_id":"1",
+      "poster":"3"
+    }
+  ]
+
+}
