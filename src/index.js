@@ -1,72 +1,84 @@
-// Your code here
-//Frontend logic
-document.addEventListener('DOMContentLoaded',(Event) =>{
-    console.log("before")
-    
-})
-let ul = document.createElement('ul')
-let li = document.createElement('li')
-
-ul.appendChild(li)
-fetch("http://localhost:3000/movies")
-
-  .then(ben => ben.json())
-  .then(movies => {
-    console.log(movies);
-  })
-
-function displayMovies(movies){
-
-  return movies = movies.map((movies)=>{
-      return`
-    <div class="content"><div class="card" style="width: 18rem;">
-              
-       <img src="${movies.title}https://www.gstatic.com/tv/thumb/v22vodart/2157/p2157_v_v8_ab.jpg" class="card-img-center" alt="image" height="350" width="350">  
-    
-        <div class="card-body">
-        <h5 class="card-title">${movies.title_sold}</h5>
-        <p class="card-text">${movies.poster}</p>
-      <form class="poster">
-      
-        <div class="description">
-           <div id="film-info"> [INSERT MOVIE DESCRIPTION HERE]<div>
-           <span id="showtime" class="ui label">[SHOWTIME]</span>
-          <span id="ticket-num">X</span> remaining tickets
-          <button id="buy-ticket" onclick ="alert" class="ui orange button">Buy Ticket</button>
-      </form>
+let URL = "https://project-code-challenge-3.vercel.app/db.json"
+ const listHolder = document.getElementById('films') 
+ document.addEventListener('DOMContentLoaded', ()=>{ 
+     document.getElementsByClassName('film item')[0].remove() 
+     fetchOne(URL); 
+     fetchMovies(URL) 
+ }) 
   
-    </div>
-    `
-  })
- const moviesContainer = document.getElementById("all-movies")
- moviesContainer.innerHTML = moviesCodes
-}
-function viewMovies(){
-  const button = document.querySelectorAll(".button-view")
-  console.log(buttonviews);
-}
-function methodsubmit(){
-  const forms = document.querySelectorAll("form.poster")
-  forms.addEventListener("submit",function(event){
-    event.preventDefault();
-    console.log
-  })
-}
-
- const  baseUrl ="http://localhost:3000"
-
-//business logic
-
-
-function addInterestingMovie(interestingMovies){
-  fetch(`${baseUrl}/favorite`,{
-    method:"post",
-    headers:{
-      "content-Type":"application/json",
-      "Accept":"application/json"
-    },
-    body:JSON.stringify(interestingMovies)
-
-    })
+ /**fetch 1 movie */ 
+ function fetchOne(URL){ 
+     fetch(URL).then((response) => response.json()) 
+     .then(data => { 
+         setUpMovieDetails(data.films[0]); 
+     }) 
+ } 
   
-}
+  
+ //Create fetch function to get the data from the db.json 
+ function fetchMovies(URL){ 
+     fetch(URL) 
+     .then(resp => resp.json()) 
+     .then(movies => { 
+         movies.films.forEach(movie => { 
+             displayMovie(movie) 
+         }); 
+     }) 
+ } 
+ //function to display the titles of the movies as a list 
+ function displayMovie(movie){ 
+     const list = document.createElement('li') 
+     list.style.cursor="cell" 
+     list.textContent= (movie.title) 
+     listHolder.appendChild(list) 
+     addClickEvent() 
+ } 
+ //Adding the click event listener 
+ function addClickEvent(){ 
+     let children=listHolder.children 
+     for(let i=0; i<children.length; i++){ 
+         let child=children[i] 
+         // console.log(child) <= to check if have the right child 
+         child.addEventListener('click',() => { 
+             fetch(`${URL}`) 
+             .then(res => res.json()) 
+             .then(movie => { 
+                 document.getElementById('buy-ticket').textContent = 'Buy Ticket' 
+                 setUpMovieDetails(movie.films[i]) 
+             }) 
+         }) 
+     } 
+ } 
+ //Posting movie details 
+ // poster to be dispalyed on the div with poster id 
+ function setUpMovieDetails(funMovie){ 
+     const preview = document.getElementById('poster') 
+     preview.src = funMovie.poster; 
+ //title 
+     const movieTitle = document.querySelector('#title'); 
+     movieTitle.textContent = funMovie.title; 
+     //runtime 
+     const movieTime = document.querySelector('#runtime'); 
+     movieTime.textContent = `${funMovie.runtime} minutes`; 
+     //description 
+     const movieDescription = document.querySelector('#film-info'); 
+     movieDescription.textContent = funMovie.description; 
+     //Showtime 
+     const showTime = document.querySelector('#showtime') 
+     showTime.textContent = funMovie.showtime; 
+     // available tickets =capacity - tickets sold 
+     const tickets  = document.querySelector('#ticket-number') 
+     tickets.textContent = funMovie.capacity -funMovie.tickets_sold; 
+ } 
+ // //Sold out 
+ const btn = document.getElementById('buy-ticket') 
+         btn.addEventListener('click', function(event){ 
+             let remainingTickets = document.querySelector('#ticket-number').textContent 
+             event.preventDefault() 
+             if(remainingTickets > 0){ 
+                 document.querySelector('#ticket-number').textContent  = remainingTickets-1 
+             } 
+             else if(parseInt(remTickets, 10)===0){ 
+                 btn.textContent = 'Sold Out' 
+             } 
+     })
